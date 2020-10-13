@@ -5,7 +5,9 @@ const request = new XMLHttpRequest();
 request.addEventListener('readystatechange', () => {
     // request is complete and successful
     if(request.readyState===4 && request.status ===200){
-        callback(undefined, request.responseText);
+        // take json string to js object
+        const data = JSON.parse(request.responseText);
+        callback(undefined, data);
     }
     // request is complete but data request is not successful
     else if(request.readyState=== 4){
@@ -13,9 +15,11 @@ request.addEventListener('readystatechange', () => {
     }
 })
 
-request.open('GET', 'http://jsonplaceholder.typicode.com/todoss/');
+request.open('GET', 'todos.json');
 request.send();
 };
+
+
 // convention wise err always comes first
 getTodos((err, data)=>{
 if(err){
